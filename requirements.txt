@@ -1,0 +1,16 @@
+python-dotenv
+
+requests
+
+pandas
+
+plotly
+
+pytest
+
+# web app:
+flask
+
+# required by production server only
+
+gunicorn
