@@ -75,7 +75,7 @@ def results():
         title="US Real GDP Over Time",
         labels={
             "date": "Year",
-            "value": "GDP ($)"
+            "value": "GDP ($ Billions)"
         }
     )
     gdp_chart = gdp_fig.to_html(
@@ -114,6 +114,8 @@ def results():
         gdp_df.iloc[-1]["value"], 
         2
     )
+
+    display_gdp = round(latest_gdp/1000,2)
 
     latest_interest_rate=round(
         fed_funds_df.iloc[-1]["value"],
@@ -225,6 +227,7 @@ def results():
         inflation=latest_inflation,
         unemployment=latest_unemployment,
         gdp=latest_gdp,
+        display_gdp=display_gdp,
         interest_rate=latest_interest_rate,
 
         inflation_chart=inflation_chart,
