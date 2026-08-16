@@ -4,6 +4,8 @@ requests
 
 pandas
 
+time 
+
 plotly
 
 pytest

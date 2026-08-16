@@ -2,7 +2,7 @@
 Economic Pulse: Economic Health &amp; Market Conditions Analyzer
 
 ```sh
-cd ~/Desktop/software-dev-exercise
+cd ~/Documents/economic-pulse-app
 ```
 
 Create a virtual environment:
