@@ -1,12 +1,16 @@
 # this is the "web_app/routes/economic_routes.py" file...
 import time 
+import plotly.express as px
 from flask import Blueprint, request, render_template
 from app.economic_service import (
     get_indicator,
     get_gdp,
     get_federal_funds_rate
 )
-
+from app.scoring import (
+    calculate_score,
+    determine_assessment
+)
 economic_routes = Blueprint("economic_routes", __name__)
 
 @economic_routes.route("/economic/form")
@@ -26,19 +30,75 @@ def results():
         "INFLATION"
     )
 
+    inflation_fig = px.line(
+        inflation_df,
+        x="date",
+        y="value",
+        title="US Inflation Rate Over Time",
+        labels={
+            "date": "Year",
+            "value": "Inflation Rate (%)"
+        }
+    )
+    inflation_chart = inflation_fig.to_html(
+        full_html=False
+    )
+
     time.sleep(1)
 
     unemployment_df = get_indicator(
         "UNEMPLOYMENT"
     )   
     
+    unemployment_fig = px.line(
+        unemployment_df,
+        x="date",
+        y="value",
+        title="US Unemployment Rate Over Time",
+        labels={
+            "date": "Year",
+            "value": "Unemployment Rate (%)"
+        }
+    )
+    unemployment_chart = unemployment_fig.to_html(
+        full_html=False
+    )
+
     time.sleep(1)
 
     gdp_df = get_gdp()
 
+    gdp_fig = px.line(
+        gdp_df,
+        x="date",
+        y="value",
+        title="US Real GDP Over Time",
+        labels={
+            "date": "Year",
+            "value": "GDP ($)"
+        }
+    )
+    gdp_chart = gdp_fig.to_html(
+        full_html=False
+    )  
+
     time.sleep(1)
 
     fed_funds_df = get_federal_funds_rate()
+        
+    interest_fig = px.line(
+        fed_funds_df,
+        x="date",
+        y="value",
+        title="Federal Funds Rate Over Time",
+        labels={
+            "date": "Year",
+            "value": "Interest Rate (%)"
+        }
+    )
+    interest_chart = interest_fig.to_html(
+        full_html=False
+    )  
 
     latest_inflation=round(
         inflation_df.iloc[-1]["value"], 
@@ -60,64 +120,17 @@ def results():
         2
     )
 
-    score = 0 
-    if latest_inflation <= 2:
-        score += 25
-    elif latest_inflation <= 4:
-        score += 15
-    else: 
-        score += 5
+    score = calculate_score(
+        latest_inflation,
+        latest_unemployment,
+        latest_gdp,
+        latest_interest_rate
+    ) 
 
-    if latest_unemployment <= 4:
-        score += 25
-    elif latest_unemployment <= 6:
-        score += 15
-    else: 
-        score += 5
-
-    if latest_gdp >= 25000:
-        score += 25
-    elif latest_gdp >= 20000:
-        score += 15
-    else:
-        score += 5
-    
-    if latest_interest_rate <= 3:
-        score += 25
-    elif latest_interest_rate <= 5:
-        score += 15
-    else:
-        score += 5
-    
-    if risk_tolerance == "Conservative":
-        if score >= 85:
-            assessment = "Healthy"
-        elif score >= 65:
-            assessment = "Stable"
-        elif score >= 45:
-            assessment = "Weak"
-        else:
-            assessment = "High Risk"
-        
-    elif risk_tolerance == "Moderate":
-        if score >= 75:
-            assessment = "Healthy"
-        elif score >= 55:
-            assessment = "Stable"
-        elif score >= 35:
-            assessment = "Weak"
-        else:
-            assessment = "High Risk"
-
-    else: # Aggressive
-        if score >= 65:
-            assessment = "Healthy"
-        elif score >= 45:
-            assessment = "Stable"
-        elif score >= 25:
-            assessment = "Weak"
-        else:
-            assessment = "High Risk"
+    assessment = determine_assessment(
+        score,
+        risk_tolerance
+    )
 
     if risk_tolerance == "Conservative":
         if assessment == "Healthy":
@@ -212,5 +225,10 @@ def results():
         inflation=latest_inflation,
         unemployment=latest_unemployment,
         gdp=latest_gdp,
-        interest_rate=latest_interest_rate
+        interest_rate=latest_interest_rate,
+
+        inflation_chart=inflation_chart,
+        unemployment_chart=unemployment_chart,
+        gdp_chart=gdp_chart,
+        interest_chart=interest_chart
     )
