@@ -7,7 +7,10 @@ from app.economic_service import (
     get_gdp,
     get_federal_funds_rate
 )
-
+from app.scoring import (
+    calculate_score,
+    determine_assessment
+)
 economic_routes = Blueprint("economic_routes", __name__)
 
 @economic_routes.route("/economic/form")
@@ -117,64 +120,17 @@ def results():
         2
     )
 
-    score = 0 
-    if latest_inflation <= 2:
-        score += 25
-    elif latest_inflation <= 4:
-        score += 15
-    else: 
-        score += 5
+    score = calculate_score(
+        latest_inflation,
+        latest_unemployment,
+        latest_gdp,
+        latest_interest_rate
+    ) 
 
-    if latest_unemployment <= 4:
-        score += 25
-    elif latest_unemployment <= 6:
-        score += 15
-    else: 
-        score += 5
-
-    if latest_gdp >= 25000:
-        score += 25
-    elif latest_gdp >= 20000:
-        score += 15
-    else:
-        score += 5
-    
-    if latest_interest_rate <= 3:
-        score += 25
-    elif latest_interest_rate <= 5:
-        score += 15
-    else:
-        score += 5
-    
-    if risk_tolerance == "Conservative":
-        if score >= 85:
-            assessment = "Healthy"
-        elif score >= 65:
-            assessment = "Stable"
-        elif score >= 45:
-            assessment = "Weak"
-        else:
-            assessment = "High Risk"
-        
-    elif risk_tolerance == "Moderate":
-        if score >= 75:
-            assessment = "Healthy"
-        elif score >= 55:
-            assessment = "Stable"
-        elif score >= 35:
-            assessment = "Weak"
-        else:
-            assessment = "High Risk"
-
-    else: # Aggressive
-        if score >= 65:
-            assessment = "Healthy"
-        elif score >= 45:
-            assessment = "Stable"
-        elif score >= 25:
-            assessment = "Weak"
-        else:
-            assessment = "High Risk"
+    assessment = determine_assessment(
+        score,
+        risk_tolerance
+    )
 
     if risk_tolerance == "Conservative":
         if assessment == "Healthy":
