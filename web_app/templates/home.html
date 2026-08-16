@@ -1,0 +1,33 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+<h1>Economic Pulse</h1>
+
+<p>Analyze current economic conditions using GDP, Inflation, Unemployment, and Interest Rate data.</p>
+
+    <!-- SEE: https://getbootstrap.com/docs/5.2/components/carousel/ -->
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/images/stocks_graph.jpg" class="d-block w-100" alt="...">
+            </div>
+
+            <div class="carousel-item">
+                <img src="/static/images/inflation.jpg" class="d-block w-100" alt="...">
+            </div>
+
+            <div class="carousel-item">
+                <img src="/static/images/gdp.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/economic/form">
+            Start Economic Analysis
+        </a>
+    </div>
+
+{% endblock %}

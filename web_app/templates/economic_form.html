@@ -1,0 +1,76 @@
+
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "economic_form" %}
+
+{% block content %}
+
+<h1>Economic Pulse</h1>
+
+<p>
+        Select your preferences and generate an analysis
+</p>
+
+<form action="/economic/results" method="POST">
+        
+<label>
+        Risk Tolerance:
+</label>
+
+<select
+name="risk_tolerance"
+class="form-select"
+>
+
+<option value="Conservative">
+        Conservative
+</option>
+
+<option value="Moderate">
+        Moderate
+</option>
+
+<option value="Aggressive">
+        Aggressive
+</option>
+
+</select>
+
+<br>
+
+<label>
+        Primary Indicator:
+</label>
+
+<select
+name="indicator"
+class="form-select"
+>
+
+<option value="Inflation">
+        Inflation
+</option>
+
+<option value="GDP">
+        GDP
+</option>
+
+<option value="Unemployment">
+        Unemployment
+</option>
+
+<option value="Interest Rate">
+        Interest Rate
+</option>
+
+</select>
+
+<br>
+
+<button
+type="submit"
+class="btn btn-primary">
+                Generate Analysis
+        </button>
+</form>
+
+{% endblock %}
