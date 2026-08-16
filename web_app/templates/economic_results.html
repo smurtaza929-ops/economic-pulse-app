@@ -1,0 +1,35 @@
+
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "economic_results" %}
+
+{% block content %}
+
+<h1>Economic Analysis Results</h1>
+
+<p>
+
+<b>Risk Tolerance:</b>
+{{ risk_tolerance }}
+</p>
+
+<p>
+<b>Selected Indicator:</b>
+{{ indicator }}
+</p>
+
+<p>
+<b>Economic Health Score:</b>
+{{ score }}
+</p>
+
+<p>
+
+<b>Assessment:</b>
+{{ assessment }}
+</p>
+
+<a href="/economic/form">
+    Run Another Analysis
+</a>
+
+{% endblock %}
