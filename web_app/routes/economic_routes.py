@@ -85,7 +85,7 @@ def results():
     time.sleep(1)
 
     fed_funds_df = get_federal_funds_rate()
-        
+    
     interest_fig = px.line(
         fed_funds_df,
         x="date",
