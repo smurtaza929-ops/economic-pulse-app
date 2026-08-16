@@ -1,6 +1,35 @@
 # Economic-Pulse-App
 Economic Pulse: Economic Health &amp; Market Conditions Analyzer
 
+## Project Overview
+
+Economic Pulse analyzes U.S. economic conditions using Inflation, Unemployment, GDP, and Interest Rates.
+The application generates an Economic Health Score and provides investor guidance based on a selected risk profile.
+
+## Features
+- Economic Health Score
+- Personalized Investor Guidance
+- Plotly Visualizations
+- Alpha Vantage API Integration
+- Automated Testing with Pytest
+- GitHub Actions Continuous Integration
+
+## Technologies Used
+- Python
+- Flask
+- Jinja2
+- Bootstrap 5
+- Pandas
+- Plotly
+- Alpha Vantage API
+- Pytest
+- GitHub Actions
+- GitHub
+- Conda
+- Python Dotenv
+
+## Running the Application 
+
 ```sh
 cd ~/Documents/economic-pulse-app
 ```
@@ -25,7 +54,7 @@ pip install -r requirements.txt
 
 ## Configuration
 
-The stocks functionality requires an AlphaVantage API key. Obtain a premium AlphaVantage API Key (using the [form](https://www.alphavantage.co/support/#api-key) or shared by the prof).
+The app's functionality requires an AlphaVantage API key. Obtain a premium AlphaVantage API Key (using the [form](https://www.alphavantage.co/support/#api-key)
 
 Create a local ".env" file and store your environment variable in there:
 
@@ -36,22 +65,6 @@ ALPHAVANTAGE_API_KEY="______________"
 
 # also tell flask where our web app is defined:
 FLASK_APP=web_app
-```
-
-## Usage
-
-Run RPS game:
-
-```sh
-python -m app.rps
-```
-
-Run stocks dashboard:
-
-```sh
-ALPHAVANTAGE_API_KEY="14SJGKTZQOG2TCYK" python -m app.stocks
-
-python -m app.stocks
 ```
 
 ### Web App
@@ -70,9 +83,9 @@ FLASK_APP=web_app flask run
 # ... or set FLASK_APP variable via ".env" file
 export FLASK_APP=web_app
 flask run
-```
-# 'ctrl + c' to stop and 'flask run' to start again when updates made in flask web app, must restart the web server
 
+# Use 'ctrl + c' to stop and 'flask run' to start again when updates made in flask web app, must restart the web server
+```
 ## Testing
 
 Run tests:

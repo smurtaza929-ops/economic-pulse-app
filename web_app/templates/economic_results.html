@@ -8,58 +8,59 @@
 
 <p>
 
-<b>Risk Tolerance:</b>
+<b><strong>Risk Tolerance:</strong></b>
 {{ risk_tolerance }}
 </p>
 
 <h3>Economic Indicators Assessed</h3>
 
 <p>
-<b>Economic Health Score:</b>
-{{ score }}
-</p>
-
-<p>
 <b>Current Inflation:</b>
-{{ inflation }}
+{{ inflation }}%
 </p>
 
 <p>
 <b>Current Unemployment:</b>
-{{ unemployment }}
+{{ unemployment }}%
 </p>
 
 <p>
 <b>Current GDP:</b>
-{{ gdp }}
+${{ display_gdp }} Trillion
 </p>
 
 <p>
 <b>Current Interest Rate:</b>
-{{ interest_rate }}
+{{ interest_rate }}%
 </p>
 
+<h3>Economic Health Score:</h3>
 <p>
-
-<b>Assessment:</b>
-{{ assessment }}
+    {{ score }}
 </p>
 
+<h3>Overall Assessment:</h3>
 <p>
-<b>Investor Guidance:</b>
-{{ guidance }}
+    {{ assessment }}
 </p>
 
-<h2>Inflation Trend</h2>
+<h3>Investor Guidance:</h3>
+<p>
+    {{ guidance }}
+</p>
+
+<h3>Economic Trend Visualizations</h3>
+<br>
+<h4>Inflation Trend</h4>
 {{ inflation_chart|safe }}
 
-<h2>Unemployment Trend</h2>
+<h4>Unemployment Trend</h4>
 {{ unemployment_chart|safe }}
 
-<h2>GDP Trend</h2>
+<h4>GDP Trend</h4>
 {{ gdp_chart|safe }}
 
-<h2>Interest Rate Trend</h2>
+<h4>Interest Rate Trend</h4>
 {{ interest_chart|safe }}
 
 <a href="/economic/form">
