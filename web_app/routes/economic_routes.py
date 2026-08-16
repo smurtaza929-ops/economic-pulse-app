@@ -1,5 +1,6 @@
 # this is the "web_app/routes/economic_routes.py" file...
 import time 
+import plotly.express as px
 from flask import Blueprint, request, render_template
 from app.economic_service import (
     get_indicator,
@@ -26,19 +27,75 @@ def results():
         "INFLATION"
     )
 
+    inflation_fig = px.line(
+        inflation_df,
+        x="date",
+        y="value",
+        title="US Inflation Rate Over Time",
+        labels={
+            "date": "Year",
+            "value": "Inflation Rate (%)"
+        }
+    )
+    inflation_chart = inflation_fig.to_html(
+        full_html=False
+    )
+
     time.sleep(1)
 
     unemployment_df = get_indicator(
         "UNEMPLOYMENT"
     )   
     
+    unemployment_fig = px.line(
+        unemployment_df,
+        x="date",
+        y="value",
+        title="US Unemployment Rate Over Time",
+        labels={
+            "date": "Year",
+            "value": "Unemployment Rate (%)"
+        }
+    )
+    unemployment_chart = unemployment_fig.to_html(
+        full_html=False
+    )
+
     time.sleep(1)
 
     gdp_df = get_gdp()
 
+    gdp_fig = px.line(
+        gdp_df,
+        x="date",
+        y="value",
+        title="US Real GDP Over Time",
+        labels={
+            "date": "Year",
+            "value": "GDP ($)"
+        }
+    )
+    gdp_chart = gdp_fig.to_html(
+        full_html=False
+    )  
+
     time.sleep(1)
 
     fed_funds_df = get_federal_funds_rate()
+    
+    interest_fig = px.line(
+        fed_funds_df,
+        x="date",
+        y="value",
+        title="Federal Funds Rate Over Time",
+        labels={
+            "date": "Year",
+            "value": "Interest Rate (%)"
+        }
+    )
+    interest_chart = interest_fig.to_html(
+        full_html=False
+    )  
 
     latest_inflation=round(
         inflation_df.iloc[-1]["value"], 
@@ -212,5 +269,10 @@ def results():
         inflation=latest_inflation,
         unemployment=latest_unemployment,
         gdp=latest_gdp,
-        interest_rate=latest_interest_rate
+        interest_rate=latest_interest_rate,
+
+        inflation_chart=inflation_chart,
+        unemployment_chart=unemployment_chart,
+        gdp_chart=gdp_chart,
+        interest_chart=interest_chart
     )
